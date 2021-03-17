@@ -4,7 +4,10 @@ import {Injectable} from "@angular/core";
 	providedIn: "root",
 })
 export class StoreService {
-	static courses: any;
+   static courses: any;
+   static courseData: any;
+   static teeCount: number = 0;
+   static activeCourse: any;
 	static players: object = {
 		0: {
 			name: "",
@@ -43,7 +46,6 @@ export class StoreService {
 			net: 0,
 		},
 	};
-	static courseData: any;
 
 	constructor() {}
 
