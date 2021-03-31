@@ -1,1 +1,27 @@
 /* You can add global styles to this file, and also import other style files */
+
+body {
+	background: #041d35;
+	color: white;
+   margin: 0;
+}
+
+@font-face {
+	font-family: Ubuntu;
+	src: url(assets/fonts/Ubuntu-Bold.ttf);
+}
+
+@font-face {
+	font-family: Raleway;
+	src: url(assets/fonts/Raleway-SemiBold.ttf);
+}
+
+@font-face {
+	font-family: "Source Sans Pro";
+	src: url(assets/fonts/SourceSansPro-Black.ttf);
+}
+
+@font-face {
+	font-family: "Noto Sans";
+	src: url(assets/fonts/NotoSans-Regular.ttf);
+}
