@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-init-card',
@@ -6,6 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./init-card.component.scss']
 })
 export class InitCardComponent implements OnInit {
+
+   @Input() courseData = { name: "NULL" };
+   @Input() idx = -1;
 
   constructor() { }
 

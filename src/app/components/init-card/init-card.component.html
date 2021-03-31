@@ -1,1 +1,6 @@
-<p>init-card works!</p>
+<div class="card no-info">
+	<div class="card-img card-img-0"></div>
+	<div class="card-title">{{ courseData.name }}</div>
+   <div *ngIf="!courseData.hasData" class="load-desc load-{{ idx }}">Load Course Data</div>
+   <div class="select-course load-{{ idx }}">Select Course</div>
+</div>

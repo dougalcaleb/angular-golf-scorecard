@@ -1,0 +1,122 @@
+.course-select {
+	width: 100%;
+	position: relative;
+	z-index: 10;
+	margin-top: 85px;
+	padding-bottom: 30px;
+	transition: 0.2s;
+	left: 0;
+	.card-wrap {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-evenly;
+		width: 100%;
+		bottom: 0;
+		overflow: hidden;
+		flex-direction: column;
+      align-items: center;
+		.card-wrap-title {
+			color: white;
+			font-family: "Ubuntu";
+			margin-top: 0;
+			margin-bottom: 30px;
+			background: rgb(27, 27, 27);
+			border-radius: 5px;
+			height: 50px;
+			line-height: 50px;
+			width: 40vh;
+			text-align: center;
+			border-right: 3px solid #ef0000;
+			border-bottom: 3px solid #ef0000;
+			box-sizing: border-box;
+			box-shadow: 3px 3px 5px black;
+			position: relative;
+			left: 0;
+			right: 0;
+		}
+		// .card {
+		// 	width: 80vw;
+		// 	max-width: 50vh;
+		// 	background: #272828;
+		// 	border-right: 5px solid #191919;
+		// 	border-bottom: 5px solid #191919;
+		// 	box-sizing: border-box;
+		// 	margin-top: 5px;
+		// 	margin-bottom: 5px;
+		// 	position: relative;
+		// 	border-radius: 10px;
+		// 	color: rgb(207, 207, 207);
+		// 	left: 0;
+		// 	right: 0;
+		// 	padding-bottom: 5px;
+		// 	transition: 0.2s;
+		// 	// box-shadow: 3px 3px 5px black;
+		// 	.emp {
+		// 		color: white;
+		// 		font-size: 14px;
+		// 	}
+		// 	.card-info {
+		// 		position: relative;
+		// 		left: 10px;
+		// 		// top: 50px;
+		// 		margin-top: 10px;
+		// 		font-family: "Noto Sans";
+		// 		font-size: 12px;
+		// 	}
+		// 	.card-desc {
+		// 		position: relative;
+		// 		margin-top: 10px;
+		// 		margin-bottom: 5px;
+		// 		left: 10px;
+		// 		width: calc(100% - 20px);
+		// 		font-family: "Noto Sans";
+		// 		font-size: 12px;
+		// 		overflow-wrap: break-word;
+		// 	}
+		// 	.load-desc {
+		// 		border-radius: 5px;
+		// 		border-right: 3px solid #074765;
+		// 		border-bottom: 3px solid #074765;
+		// 		background: #007e9a;
+		// 		width: calc(100% - 30px);
+		// 		margin: auto;
+		// 		margin-top: 15px;
+		// 		margin-bottom: 5px;
+		// 		text-align: center;
+		// 		padding: 5px;
+		// 		font-family: "Ubuntu";
+		// 		transition: 0.3s;
+		// 		position: relative;
+		// 		// color: #ffffff;
+		// 		&:active {
+		// 			border-right: 0px solid #074765;
+		// 			border-bottom: 0px solid #074765;
+		// 			margin-top: 18px;
+		// 			margin-left: calc(auto+3px);
+		// 		}
+		// 	}
+		// 	.select-course {
+		// 		border-radius: 5px;
+		// 		border-right: 3px solid #155600;
+		// 		border-bottom: 3px solid #155600;
+		// 		background: #077500;
+		// 		width: calc(100% - 30px);
+		// 		margin: auto;
+		// 		margin-top: 10px;
+		// 		margin-bottom: 5px;
+		// 		text-align: center;
+		// 		padding: 5px;
+		// 		font-family: "Ubuntu";
+		// 		transition: 0.05s;
+		// 		position: relative;
+		// 		// color: #ffffff;
+		// 		&:active {
+		// 			border-right: 0px solid #155600;
+		// 			border-bottom: 0px solid #155600;
+		// 			margin-top: 13px;
+		// 			margin-left: calc(auto+3px);
+		// 		}
+		// 	}
+		// }
+	}
+}

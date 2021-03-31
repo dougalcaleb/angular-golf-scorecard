@@ -7,6 +7,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoadPageComponent implements OnInit {
 
+   //! issue here
+   initCards: any[] = [
+      {
+         name: "First Course",
+         hasData: false,
+      },
+      {
+         name: "Course 2.0",
+         hasData: false,
+      },
+      {
+         name: "Three",
+         hasData: false,
+      },
+   ]
+
   constructor() { }
 
   ngOnInit(): void {

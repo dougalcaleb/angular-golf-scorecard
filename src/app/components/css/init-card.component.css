@@ -1,0 +1,122 @@
+p {
+  background: purple;
+}
+
+.no-info .card-img {
+  height: 20vh;
+  width: 100%;
+  background-position: center center;
+  background-size: cover;
+  border-radius: 5px;
+  border-right: 0px solid #ef0000;
+  border-bottom: 0px solid #ef0000;
+  box-sizing: border-box;
+  transition: 0.3s;
+}
+.no-info .card-title {
+  position: relative;
+  text-align: center;
+  width: 100%;
+  font-family: "Raleway";
+  font-weight: 700;
+  transition: 0.3s;
+  left: 0;
+  font-size: 30px;
+  margin-top: 10px;
+}
+.no-info .card-info,
+.no-info .card-desc {
+  opacity: 0;
+  transition: 0.2s;
+  transition-delay: 0.3s;
+}
+
+.has-info .card-img {
+  height: 15vh;
+  border-radius: 10px;
+}
+.has-info .card-info,
+.has-info .card-desc {
+  opacity: 1;
+}
+
+.card {
+  width: 80vw;
+  max-width: 50vh;
+  background: #272828;
+  border-right: 5px solid #191919;
+  border-bottom: 5px solid #191919;
+  box-sizing: border-box;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  position: relative;
+  border-radius: 10px;
+  color: #cfcfcf;
+  left: 0;
+  right: 0;
+  padding-bottom: 5px;
+  transition: 0.2s;
+}
+.card .emp {
+  color: white;
+  font-size: 14px;
+}
+.card .card-info {
+  position: relative;
+  left: 10px;
+  margin-top: 10px;
+  font-family: "Noto Sans";
+  font-size: 12px;
+}
+.card .card-desc {
+  position: relative;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  left: 10px;
+  width: calc(100% - 20px);
+  font-family: "Noto Sans";
+  font-size: 12px;
+  overflow-wrap: break-word;
+}
+.card .load-desc {
+  border-radius: 5px;
+  border-right: 3px solid #074765;
+  border-bottom: 3px solid #074765;
+  background: #007e9a;
+  width: calc(100% - 30px);
+  margin: auto;
+  margin-top: 15px;
+  margin-bottom: 5px;
+  text-align: center;
+  padding: 5px;
+  font-family: "Ubuntu";
+  transition: 0.3s;
+  position: relative;
+}
+.card .load-desc:active {
+  border-right: 0px solid #074765;
+  border-bottom: 0px solid #074765;
+  margin-top: 18px;
+  margin-left: calc(auto+3px);
+}
+.card .select-course {
+  border-radius: 5px;
+  border-right: 3px solid #155600;
+  border-bottom: 3px solid #155600;
+  background: #077500;
+  width: calc(100% - 30px);
+  margin: auto;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  text-align: center;
+  padding: 5px;
+  font-family: "Ubuntu";
+  transition: 0.05s;
+  position: relative;
+}
+.card .select-course:active {
+  border-right: 0px solid #155600;
+  border-bottom: 0px solid #155600;
+  margin-top: 13px;
+  margin-left: calc(auto+3px);
+}
