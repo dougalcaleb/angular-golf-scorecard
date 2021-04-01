@@ -1,5 +1,8 @@
 <div class="course-select">
 	<div class="card-wrap">
-		<app-init-card *ngFor="let card of initCards; let i = index;" [courseData]="card" [idx]="i"></app-init-card>
+      <div *ngIf="fetchedData">
+         <app-init-card *ngFor="let card of initCards; let i = index;" [idx]="i"></app-init-card>
+      </div>
+      <!-- [courseData]="card" -->
 	</div>
 </div>

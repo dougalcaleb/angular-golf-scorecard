@@ -1,6 +1,24 @@
-<div class="card no-info">
-	<div class="card-img card-img-0"></div>
+<div class="card no-info card-{{ idx }}">
+	<div class="card-img card-img-{{ idx }}" style="background-image: url({{ courseData.image }})"></div>
 	<div class="card-title">{{ courseData.name }}</div>
-   <div *ngIf="!courseData.hasData" class="load-desc load-{{ idx }}">Load Course Data</div>
-   <div class="select-course load-{{ idx }}">Select Course</div>
+	<div *ngIf="!fetched" class="load-desc load-{{ idx }}" (click)="requestLoad(idx)">Load Course Data</div>
+	<div class="select-course load-{{ idx }}" (click)="select(idx)">Select Course</div>
+
+   <div class="card-info" *ngIf="fetched">
+      <span class="emp">Holes:</span>
+      {{ courseData.data.holes.length }}
+      <br />
+      <span class="emp">Status:</span>
+      {{ courseData.data.status }}
+      <br />
+   </div>
+   <div class="card-desc" *ngIf="fetched">
+      <span class="emp">Address:</span>
+      <br />
+      {{ courseData.data.addr1 }}, {{ courseData.data.city }}, {{ courseData.data.stateOrProvince }}
+      <br />
+      <span class="emp">Website:</span>
+      <br />
+      {{ courseData.data.website }}
+   </div>
 </div>

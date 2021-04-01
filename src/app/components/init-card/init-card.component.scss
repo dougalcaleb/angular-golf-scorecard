@@ -37,7 +37,24 @@ p {
 	.card-img {
 		height: 15vh;
 		border-radius: 10px;
+      background-position: center center;
+		background-size: cover;
+      transition: 0.3s;
 	}
+   .card-title {
+      position: relative;
+      text-align: center;
+      width: 100%;
+      // top: 6vh;
+      // top: 150px;
+      font-family: "Raleway";
+      font-weight: 700;
+      transition: 0.3s;
+      left: 0;
+      font-size: 30px;
+      margin-top: 10px;
+      // background: rgba(0,0,0,0.3);
+  }
 	.card-info,
 	.card-desc {
 		opacity: 1;

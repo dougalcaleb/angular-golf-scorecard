@@ -4,11 +4,11 @@ import {Injectable} from "@angular/core";
 	providedIn: "root",
 })
 export class StoreService {
-	static courses: any;
-	static courseData: any;
-	static teeCount: number = 0;
-	static activeCourse: any;
-	static players: object = {
+	public courses: any[] = [];
+	public courseData: any;
+	public teeCount: number = 0;
+	public activeCourse: any;
+	public players: object = {
 		0: {
 			name: "",
 			scores: [],
@@ -49,12 +49,14 @@ export class StoreService {
 
 	constructor() {}
 
-	static cacheData(name: string, data: any) {
+	public cacheData(name: string, data: any) {
 		data = JSON.stringify(data);
 		sessionStorage.setItem(name, data);
-		let settings = JSON.parse(localStorage.getItem("settings") || "");
-		if (settings.tg_preserve) {
-			localStorage.setItem(name, data);
+		if (localStorage.getItem("golf-scorecard-settings")) {
+			let settings = JSON.parse(localStorage.getItem("golf-scorecard-settings") || "");
+			if (settings.tg_preserve) {
+				localStorage.setItem(name, data);
+			}
 		}
 	}
 }
