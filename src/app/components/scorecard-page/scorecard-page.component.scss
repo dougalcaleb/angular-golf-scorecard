@@ -1,0 +1,234 @@
+$cell-height: 5vh;
+$cell-width: 25vw;
+
+.scorecard {
+	height: calc(100% - 100px);
+	position: absolute;
+	display: flex;
+	z-index: 10;
+	top: 100px;
+	background: orange;
+	left: 200vw;
+	// left: 0;
+	width: 100vw;
+	// overflow: hidden;
+	.scorecard-nav {
+		position: absolute;
+		width: 100%;
+		display: flex;
+		justify-content: space-evenly;
+		background: #292929;
+		border-right: 5px solid #191919;
+		border-bottom: 5px solid #191919;
+		box-sizing: border-box;
+		border-radius: 10px;
+		position: absolute;
+		left: 0;
+		right: 0;
+		margin: auto;
+		// box-shadow: 3px 3px 5px black;
+		padding: 5px;
+		button {
+			width: 40px;
+			position: relative;
+			background: none;
+			border: none;
+			outline: none;
+			font-family: "Raleway";
+			height: 40px;
+			transition: 0.05s;
+			&:active svg {
+				// margin-top: 3px;
+				// margin-left: 3px;
+				border-right: 1px solid #074765;
+				border-bottom: 1px solid #074765;
+				left: 3px;
+				top: 3px;
+			}
+			svg {
+				height: 30px;
+				width: 30px;
+				position: absolute;
+				left: 0;
+				right: 0;
+				top: 0;
+				bottom: 0;
+				margin: auto;
+				color: #007e9a;
+				border-right: 3px solid #074765;
+				border-bottom: 3px solid #074765;
+				border-radius: 5px;
+				padding: 0;
+				transition: 0.05s;
+				// background: white;
+			}
+		}
+	}
+
+	.scorecard-buttons {
+		position: absolute;
+		width: 100%;
+		display: flex;
+		justify-content: space-evenly;
+		background: #292929;
+		border-right: 5px solid #191919;
+		border-bottom: 5px solid #191919;
+		box-sizing: border-box;
+		border-radius: 10px;
+		position: absolute;
+		left: 0;
+		right: 0;
+		margin: auto;
+		// box-shadow: 3px 3px 5px black;
+		padding: 5px;
+		flex-direction: column;
+		// top: 480px;
+		.easy-nav {
+			margin-bottom: 20px;
+		}
+		.easy-btn-wrap {
+			display: flex;
+			justify-content: space-evenly;
+			.easy-empty {
+				opacity: 0;
+			}
+			button {
+				width: 40px;
+				position: relative;
+				background: none;
+				border: none;
+				outline: none;
+				font-family: "Raleway";
+				height: 40px;
+				transition: 0.05s;
+				&:active svg {
+					// margin-top: 3px;
+					// margin-left: 3px;
+					border-right: 1px solid #074765;
+					border-bottom: 1px solid #074765;
+					left: 3px;
+					top: 3px;
+				}
+				svg {
+					height: 30px;
+					width: 30px;
+               position: absolute;
+               margin: auto;
+               left: 0;
+               right: 0;
+               top: 0;
+               bottom: 0;
+					color: #077500;
+					border-right: 3px solid #155600;
+					border-bottom: 3px solid #155600;
+					border-radius: 5px;
+					padding: 0;
+					transition: 0.05s;
+					// background: white;
+				}
+			}
+		}
+	}
+	.name {
+		width: 100%;
+		position: absolute;
+		top: -30px;
+		text-align: center;
+		color: white;
+		font-family: "Raleway", "Noto Sans";
+	}
+	.scorecard-wrap {
+		// background: purple;
+		width: 100%;
+		position: relative;
+		overflow: hidden;
+		.databody {
+			width: 75vw;
+			background: #313131;
+			color: white;
+			position: absolute;
+			right: 0;
+			top: 0;
+			overflow-x: scroll;
+			// height: calc(5vh * 11);
+			border-radius: 10px;
+			border-right: 5px solid #191919;
+			border-bottom: 5px solid #191919;
+			.data-col {
+				position: absolute;
+				div {
+					height: $cell-height;
+					box-sizing: border-box;
+					width: $cell-width;
+					position: relative;
+					text-align: center;
+					line-height: $cell-height;
+					font-family: "Noto Sans";
+					input {
+						height: 100%;
+						width: 100%;
+						position: relative;
+						box-sizing: border-box;
+						outline: none;
+						padding: none;
+						// background: orange;
+						// border: 2px solid white;
+						border: none;
+						background: transparent;
+						color: #00ffdc;
+						text-align: center;
+						font-family: "Noto Sans";
+						font-size: 20px;
+					}
+				}
+			}
+			:not(.no-seperator-col) div {
+				border-right: 2px solid #272727;
+			}
+			.special-col {
+				background: #242424;
+			}
+			.disabled {
+				background: #282828;
+			}
+		}
+		.headers {
+			width: 20vw;
+			// background: purple;
+			background: #292929;
+			position: absolute;
+			top: 0;
+			color: rgb(207, 207, 207);
+			border-radius: 10px;
+			border-top-left-radius: 0px;
+			border-right: 5px solid #191919;
+			border-bottom: 5px solid #191919;
+			.tee-head {
+				position: relative;
+			}
+			div {
+				box-sizing: border-box;
+				// background: green;
+				height: $cell-height;
+				text-align: center;
+				display: flex;
+				justify-content: center;
+				flex-direction: column;
+				font-family: "Ubuntu";
+				input {
+					width: 100%;
+					height: 100%;
+					border: none;
+					box-sizing: border-box;
+					outline: none;
+					text-align: center;
+					font-size: 15px;
+					font-family: "Ubuntu";
+					background: #313131;
+					color: white;
+					// animation: 0.5s invalid infinite;
+				}
+			}
+		}
+	}
+}

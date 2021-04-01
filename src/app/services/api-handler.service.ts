@@ -83,59 +83,55 @@ export class ApiHandlerService {
 		this.cxhr.open("GET", apiurl, true);
 		this.cxhr.responseType = "text";
 		this.cxhr.send();
-      return new Promise((resolve, reject) => {
-         this.cxhr.onload = () => {
-            if (this.cxhr.status == 200) {
-               basic = JSON.parse(this.cxhr.responseText);
-               console.log("Recieved course data... ", basic);
-               this.Store.cacheData("course-" + this.Store.courseData.courses[id].id, basic);
-               this.Store.courses[this.Store.courseData.courses[id].id] = basic;
-   
-               // will show info on the selection card. false when user selects a course without loading info first, reduces jank
-               if (display) {
-                  console.log("Returning",this.Store.courseData[id]);
-                  // return new Promise((resolve, reject) => {
-                     resolve(basic);
-                  // });
-                  // return this.Store.courseData[id];
-   
-                  // document.querySelector(".card"+id).innerHTML = `
-                  // <div class="card-img card-img-${id}"></div>
-                  // <div class="card-title">${courseData.courses[id].name}</div>
-                  // <div class="card-info">
-                  //     <span class="emp">Holes:</span> ${courses[courseData.courses[id].id].data.holeCount}<br/>
-                  //     <span class="emp">Status:</span> ${courses[courseData.courses[id].id].data.status}<br/>
-                  // </div>
-                  // <div class="card-desc">
-                  //     <span class="emp">Address:</span><br/>${courses[courseData.courses[id].id].data.addr1}, ${courses[courseData.courses[id].id].data.city}, ${courses[courseData.courses[id].id].data.stateOrProvince}<br/>
-                  //     <span class="emp">Website:</span><br/>${courses[courseData.courses[id].id].data.website}
-                  // </div>
-                  // <div class="select-course select-${id}">Select Course</div>`;
-                  // document.querySelector(`.card-img-${id}`).style.background = `url(${courseData.courses[id].image})`;
-                  // document.querySelector(`.card-img-${id}`).style.backgroundSize = "cover";
-                  // document.querySelector(`.card-img-${id}`).style.backgroundPosition = "center center";
-                  // document.querySelector(".select-"+id).addEventListener("click", function() {
-                  //     selectCourse(this.classList[1].split("-")[1]);
-                  // });
-                  // setTimeout(function(){
-                  //     document.querySelector(".card"+id).classList.add("has-info");
-                  // }, 100);
-               } else {
-                  this.Store.activeCourse = "course-" + this.Store.courseData.courses[id].id;
-                  // Cards.fillCard(id);
-               }
-               this.retrievalAttempts = 3;
-            } else {
-               console.warn("Retrieval failed, retrying");
-               if (this.retrievalAttempts > 0) {
-                  this.loadBasicInfo(id, display);
-                  this.retrievalAttempts--;
-               } else {
-                  console.warn("Retried 3 times and failed. Try refreshing the page.");
-               }
-            }
-         };
-      });
-      
+		if (display) {
+			return new Promise((resolve, reject) => {
+				this.cxhr.onload = () => {
+					if (this.cxhr.status == 200) {
+						basic = JSON.parse(this.cxhr.responseText);
+						// console.log("Recieved course data... ", basic);
+						// this.Store.cacheData("course-" + this.Store.courseData.courses[id].id, basic);
+						// this.Store.courses[this.Store.courseData.courses[id].id] = basic;
+
+						// will show info on the selection card. false when user selects a course without loading info first, reduces jank
+						if (display) {
+							console.log("Returning", this.Store.courseData[id]);
+						} else {
+							this.Store.activeCourse = "course-" + this.Store.courseData.courses[id].id;
+						}
+						resolve(basic);
+						this.retrievalAttempts = 3;
+					} else {
+						console.warn("Retrieval failed, retrying");
+						if (this.retrievalAttempts > 0) {
+							this.loadBasicInfo(id, display);
+							this.retrievalAttempts--;
+						} else {
+							console.warn("Retried 3 times and failed. Try refreshing the page.");
+						}
+					}
+				};
+			});
+		} else {
+			this.cxhr.onload = () => {
+				if (this.cxhr.status == 200) {
+					basic = JSON.parse(this.cxhr.responseText);
+					// console.log("Recieved course data... ", basic);
+					this.Store.cacheData("course-" + this.Store.courseData.courses[id].id, basic);
+					this.Store.courses[this.Store.courseData.courses[id].id] = basic;
+				} else {
+					console.warn("Retrieval failed");
+				}
+			};
+		}
+	}
+
+	selectCourse(id: any) {
+		id = parseInt(id);
+		if (!sessionStorage.getItem("course-" + this.Store.courseData.courses[id].id)) {
+			this.loadBasicInfo(id, false);
+		} else {
+			this.Store.activeCourse = JSON.parse(sessionStorage.getItem("course-" + this.Store.courseData.courses[id].id) || "");
+			// fillCard(id);
+		}
 	}
 }
