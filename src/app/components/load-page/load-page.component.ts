@@ -21,6 +21,10 @@ export class LoadPageComponent implements OnInit {
          name: "Three",
          hasData: false,
       },
+      {
+         name: "4",
+         hasData: false,
+      }
    ]
 
   constructor() { }
