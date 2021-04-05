@@ -13,7 +13,13 @@
       </div>
       
       <div class="databody">
-         
+         <div *ngFor="let num of [0,1,2,3,4,5,6,7,8]" class="data-col data-col-{{num}}" style="left: {{num * 25}}vw">
+            <div>{{num}}</div>
+            <div *ngFor="let item of [].constructor(teeCount); let i = index;" style="color: {{colors[i]}}; background: {{activeCourseData.holes[0].teeBoxes[i].teeHexColor}};" class="r{{num + 1}}">Tee</div>
+            <div *ngFor="let pl of [0,1,2,3]" class="r{{pl + 5}}">
+               <input type="number" maxlength="2" class="input-{{pl}}-c-{{num}}" (input)="handleInput($event)" (blur)="handleBlur($event)" (keydown)="handleKeyDown($event)" />
+            </div>
+         </div>
       </div>
       
   </div>

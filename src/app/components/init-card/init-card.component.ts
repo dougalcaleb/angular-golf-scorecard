@@ -10,27 +10,41 @@ import {StoreService} from "src/app/services/store.service";
 })
 export class InitCardComponent implements OnInit {
 	// @Input() courseData:CourseData = { name: "NULL", hasData: false, };
-	courseData: CourseData = {name: "NULL", hasData: false};
+	courseData: CourseData = {name: "NULL", hasData: false}; // basic data for a singular course
 	@Input() idx = -1;
-	fetched = false;
+   fetched = false;
+   displayInfo = false;
 
 	constructor(private Store: StoreService, private apiHandler: ApiHandlerService) {}
 
 	ngOnInit(): void {
-		console.log(this.Store.courseData);
+		// console.log(this.Store.courseData);
 		this.courseData = this.Store.courseData.courses[this.idx];
 	}
 
-	requestLoad(id: any) {
-		id = parseInt(id);
-		this.courseData.data = this.apiHandler.loadBasicInfo(id).then(
-			(data) => {
+	requestLoad(id: any, from?: string, callback?: any) {
+      id = parseInt(id);
+      if (from != "select") {
+         document.querySelector(`.load-${this.idx}`)?.classList.add("clocking");
+      } else {
+         this.Store.setActive(id);
+      }
+		this.courseData.data = this.apiHandler.loadBasicInfo(id, from == "select" ? false : true).then(
+         (data) => {
+            // console.log(`Will cache data:`);
+            // console.log(data.data);
+            document.querySelector(`.load-${this.idx}`)?.classList.remove("clocking");
 				this.Store.cacheData("course-" + this.Store.courseData.courses[id].id, data.data);
 				this.Store.courses[this.Store.courseData.courses[id].id] = data.data;
 				this.courseData.data = data.data;
 				this.fetched = true;
-				document.querySelector(`.card-${this.idx}`)?.classList.remove("no-info");
-				document.querySelector(`.card-${this.idx}`)?.classList.add("has-info");
+            if (from == "select") {
+               callback();
+            } else {
+               this.displayInfo = true;
+               document.querySelector(`.card-${this.idx}`)?.classList.remove("no-info");
+               document.querySelector(`.card-${this.idx}`)?.classList.add("has-info");
+            }
 			},
 			() => {
 				console.error("Promise rejected");
@@ -40,9 +54,11 @@ export class InitCardComponent implements OnInit {
 
    select(id: any) {
       document.querySelector(`.select-${this.idx}`)?.classList.add("clocking");
-		id = parseInt(id);
-		setTimeout(() => {
-			window.scroll({
+      id = parseInt(id);
+      this.Store.activeCourse = this.Store.courseData.courses[id].id;
+      this.requestLoad(id, "select", () => {
+         document.querySelector(`.select-${this.idx}`)?.classList.remove("clocking");
+         window.scroll({
 				top: 0,
 				left: 0,
 				behavior: "smooth",
@@ -55,9 +71,11 @@ export class InitCardComponent implements OnInit {
 				// document.querySelectorAll(".card")[a].style.animation = "0.6s slideout cubic-bezier(.54,-0.06,.6,-0.34) forwards";
             // document.querySelectorAll(".card")[a].style.animationDelay = 0.083 + 0.08 * a + "s";
             document.querySelectorAll(".card")[a].setAttribute("style", `animation: 0.6s slideout cubic-bezier(0.54, -0.06, 0.6, -0.34) forwards; animation-delay: ${(0.083 + (0.08*a))}s`);
-			}
-      }, 420);
-      console.log("Active course is");
-		console.log(this.Store.activeCourse);
+         }
+      });
+      // console.log("Active course is");
+      // console.log(this.Store.activeCourse);
+      // console.log("All course data is");
+      // console.log(this.Store.courses);
 	}
 }
