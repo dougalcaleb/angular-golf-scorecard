@@ -10,7 +10,8 @@ export class ScorecardPageComponent implements OnInit {
 	activeCourseData: any = null;
 	teeCount = 0;
 	teeCountArr: any;
-	colors: any = [];
+   colors: any = [];
+   muted: any = [];
 	validKeys = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "Backspace", "Delete", "ArrowLeft", "ArrowRight", "Tab"];
 	activeInput = "";
 
@@ -40,12 +41,16 @@ export class ScorecardPageComponent implements OnInit {
 
 		for (let a = 0; a < this.teeCount; a++) {
 			this.colors.push(this.getDynamicColor(this.activeCourseData.holes[0].teeBoxes[a].teeHexColor) || "#ffffff");
+      }
+      
+      for (let a = 0; a < this.teeCount; a++) {
+			this.muted.push(this.getMutedColor(this.activeCourseData.holes[0].teeBoxes[a].teeHexColor) || "#ffffff");
 		}
 
 		console.log(this.colors);
 	}
 
-	getDynamicColor(hexcolor: any) {
+	getDynamicColor(hexcolor: any): string {
 		if (hexcolor.substr(0, 1) == "#") {
 			hexcolor = hexcolor.substr(1);
 		}
@@ -54,6 +59,25 @@ export class ScorecardPageComponent implements OnInit {
 		var b = parseInt(hexcolor.substr(4, 2), 16);
 		var yiq = (r * 299 + g * 587 + b * 114) / 1000;
 		return yiq >= 128 ? "black" : "white";
+   }
+   
+	getMutedColor(hexcolor: any, muteAmount = 3): string {
+		if (hexcolor.substr(0, 1) == "#") {
+			hexcolor = hexcolor.substr(1);
+		}
+		var r = parseInt(hexcolor.substr(0, 2), 16);
+		var g = parseInt(hexcolor.substr(2, 2), 16);
+		var b = parseInt(hexcolor.substr(4, 2), 16);
+		// let lowR = (r-muteAmount > 0) ? r-muteAmount : 0;
+		// let lowG = (g-muteAmount > 0) ? g-muteAmount : 0;
+		// let lowB = (b-muteAmount > 0) ? b-muteAmount : 0;
+
+		let lowR = r - r / muteAmount;
+		let lowG = g - g / muteAmount;
+		let lowB = b - b / muteAmount;
+
+		var darkrgb = `rgb(${lowR},${lowG},${lowB})`;
+		return darkrgb;
 	}
 
 	handleInput(event: any) {
@@ -69,8 +93,10 @@ export class ScorecardPageComponent implements OnInit {
 
 	handleBlur(event: any) {
 		console.log(this.activeInput);
-		let inputId = event.target.classList[0].split("-");
-		this.updateScores(inputId[2], inputId[4]);
+      let inputId = event.target.classList[0].split("-");
+      if (this.activeInput != "") {
+         this.updateScores(inputId[2], inputId[4]);
+      }
 	}
 
 	handleKeyDown(event: any) {
@@ -90,10 +116,10 @@ export class ScorecardPageComponent implements OnInit {
 				if (this.Store.players[key].name == newScore && key != pId && newScore.toString() != "") {
 					// document.querySelector(".input-p-" + pId + "-c-" + col).value = null;
 					// document.querySelector(".player" + pId)?.children[0]?.style.animation = "0.5s invalid";
-               document.querySelector(".player" + pId)?.children[0]?.setAttribute("style", "animation: 0.5s invalid");
+					document.querySelector(".player" + pId)?.children[0]?.setAttribute("style", "animation: 0.5s invalid");
 					setTimeout(() => {
 						// document.querySelector(".player" + pId).children[0].style.animation = "";
-                  document.querySelector(".player" + pId)?.children[0]?.setAttribute("style", "animation: none");
+						document.querySelector(".player" + pId)?.children[0]?.setAttribute("style", "animation: none");
 					}, 300);
 					return;
 				}
@@ -101,25 +127,26 @@ export class ScorecardPageComponent implements OnInit {
 			this.Store.players[pId].name = newScore;
 			return;
 		}
-		// // sets handicap
-		// if (col == "HCP") {
-		//     newScore = parseInt(newScore);
-		//     players[pId].hcp = newScore;
-		// }
-		// // sets scores
-		// if (newScore == null || newScore == "-" || newScore == "") {
-		//     return;
-		// } else if (players[pId].name == "") {
-		//     document.querySelector(".player"+pId).children[0].style.animation = "0.5s invalid";
-		//     setTimeout(() => {
-		//         document.querySelector(".player"+pId).children[0].style.animation = "";
-		//     }, 300);
-		//     document.querySelector(".input-p-"+pId+"-c-"+col).value = null;
-		//     return;
-		// } else if (col != "HCP") {
-		//     newScore = parseInt(newScore);
-		//     players[pId].scores[col] = newScore;
-		// }
+		// sets handicap
+		if (col == "HCP") {
+			//  newScore = parseInt(newScore);
+			this.Store.players[pId].hcp = newScore;
+		}
+		// sets scores
+		if (newScore == null || newScore.toString() == "-" || newScore.toString() == "") {
+			return;
+		} else if (this.Store.players[pId].name == "") {
+			document.querySelector(".player" + pId)?.children[0].setAttribute("style", "animation: 0.5s invalid");
+			setTimeout(() => {
+				//  document.querySelector(".player" + pId).children[0].style.animation = "";
+				document.querySelector(".player" + pId)?.children[0].setAttribute("style", "animation: none");
+			}, 300);
+			//  document.querySelector(".input-p-"+pId+"-c-"+col).value = null;
+			return;
+		} else if (col != "HCP") {
+			//  newScore = parseInt(newScore);
+			this.Store.players[pId].scores[col] = newScore;
+		}
 		// // updates all totals except net. fTotal = first 9 holes, sTotal = second 9, gTotal = grand total aka. all 18
 		// let fTotal = 0, sTotal = 0, gTotal = 0;
 		// for (let a = 0; a < players[pId].scores.length; a++) {
