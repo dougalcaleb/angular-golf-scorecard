@@ -135,7 +135,7 @@ export class ScorecardPageComponent implements OnInit {
 		// sets scores
 		if (newScore == null || newScore.toString() == "-" || newScore.toString() == "") {
 			return;
-		} else if (this.Store.players[pId].name == "") {
+		} else if (this.Store.players[pId.toString()].name == "") {
 			document.querySelector(".player" + pId)?.children[0].setAttribute("style", "animation: 0.5s invalid");
 			setTimeout(() => {
 				//  document.querySelector(".player" + pId).children[0].style.animation = "";
