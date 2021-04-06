@@ -25,7 +25,8 @@ export class ScorecardPageComponent implements OnInit {
 			out: [],
 			total: [],
 		},
-	};
+   };
+   colpos = 0;
 
 	constructor(public Store: StoreService) {}
 
@@ -50,6 +51,7 @@ export class ScorecardPageComponent implements OnInit {
 		// document.querySelector(".tee-head")?.style.height = ((cellHeight * teeCount) + cellHeightUnits);
 		document.querySelector(".tee-head")?.setAttribute("style", `height: ${5 * this.teeCount}vh`);
 		document.querySelector(".databody")?.setAttribute("style", `height: calc(5vh * ${this.teeCount + 7})`);
+		document.querySelector(".scorecard-nav")?.setAttribute("style", `top: calc(5vh * ${this.teeCount + 7} + 10px)`);
 
 		for (let a = 0; a < this.teeCount; a++) {
 			this.colors.push(this.getDynamicColor(this.activeCourseData.holes[0].teeBoxes[a].teeHexColor) || "#ffffff");
@@ -144,14 +146,14 @@ export class ScorecardPageComponent implements OnInit {
 	}
 
 	handleKeyDown(event: any) {
-		console.log(this.activeInput);
+		// console.log(this.activeInput);
 		if (!this.validKeys.includes(event.key) && !event.target.classList.contains("name-input")) {
 			// console.log("Preventing key", event.key);
 			event.preventDefault();
 		}
 	}
 
-	updateScores(pId: any, col: any, element?:any) {
+	updateScores(pId: any, col: any, element?: any) {
 		// pId = parseInt(pId);
 		// let newScore = parseInt(this.activeInput);
 		let newScore: any = this.activeInput;
@@ -186,7 +188,7 @@ export class ScorecardPageComponent implements OnInit {
 			return;
 		} else if (this.Store.players[pId].name == "") {
 			// console.warn("Need a name");
-         element.value = "";
+			element.value = "";
 			document.querySelector(".player" + pId)?.children[0].setAttribute("style", "animation: 0.5s invalid");
 			setTimeout(() => {
 				//  document.querySelector(".player" + pId).children[0].style.animation = "";
@@ -232,4 +234,31 @@ export class ScorecardPageComponent implements OnInit {
 		//     }
 		// }
 	}
+
+	navL() {
+		if (this.colpos > 0) {
+			this.colpos--;
+			this.alignCols();
+		}
+	}
+
+	navR() {
+		if (this.colpos < 20) {
+			this.colpos++;
+			this.alignCols();
+		}
+	}
+
+	// leverages scroll position to align columns to show 3 perfectly
+	alignCols() {
+		document.querySelector(".databody")?.scrollTo({
+			top: 0,
+			left: (this.colpos * window.innerWidth) / 4,
+			behavior: "smooth",
+		});
+   }
+   
+   handleScroll(event:any) {
+      this.colpos = Math.floor(event.target.scrollLeft / (window.innerWidth/(100/25)));
+   }
 }
