@@ -19,12 +19,12 @@ export class ScorecardPageComponent implements OnInit {
 			in: 0,
 			out: 0,
 			total: 0,
-      },
-      tees: {
-         in: [],
-         out: [],
-         total: [],
-      },
+		},
+		tees: {
+			in: [],
+			out: [],
+			total: [],
+		},
 	};
 
 	constructor(public Store: StoreService) {}
@@ -60,28 +60,28 @@ export class ScorecardPageComponent implements OnInit {
 		}
 
 		for (let a = 0; a < 9; a++) {
-         this.totals.par.out += this.activeCourseData.holes[a].teeBoxes[0].par;
-         for (let b = 0; b < this.teeCount; b++) {
-            if (!this.totals.tees.out[b]) {
-               this.totals.tees.out[b] = 0;
-            }
-            this.totals.tees.out[b] += this.activeCourseData.holes[a].teeBoxes[b].yards;
-         }
+			this.totals.par.out += this.activeCourseData.holes[a].teeBoxes[0].par;
+			for (let b = 0; b < this.teeCount; b++) {
+				if (!this.totals.tees.out[b]) {
+					this.totals.tees.out[b] = 0;
+				}
+				this.totals.tees.out[b] += this.activeCourseData.holes[a].teeBoxes[b].yards;
+			}
 		}
 
 		for (let a = 9; a < 18; a++) {
-         this.totals.par.in += this.activeCourseData.holes[a].teeBoxes[0].par;
-         for (let b = 0; b < this.teeCount; b++) {
-            if (!this.totals.tees.in[b]) {
-               this.totals.tees.in[b] = 0;
-            }
-            this.totals.tees.in[b] += this.activeCourseData.holes[a].teeBoxes[b].yards;
-         }
-      }
+			this.totals.par.in += this.activeCourseData.holes[a].teeBoxes[0].par;
+			for (let b = 0; b < this.teeCount; b++) {
+				if (!this.totals.tees.in[b]) {
+					this.totals.tees.in[b] = 0;
+				}
+				this.totals.tees.in[b] += this.activeCourseData.holes[a].teeBoxes[b].yards;
+			}
+		}
 
-      for (let a = 0; a < this.teeCount; a++) {
-         this.totals.tees.total[a] = this.totals.tees.in[a] + this.totals.tees.out[a];
-      }
+		for (let a = 0; a < this.teeCount; a++) {
+			this.totals.tees.total[a] = this.totals.tees.in[a] + this.totals.tees.out[a];
+		}
 
 		this.totals.par.total = this.totals.par.in + this.totals.par.out;
 
@@ -130,35 +130,35 @@ export class ScorecardPageComponent implements OnInit {
 	}
 
 	handleBlur(event: any) {
-		console.log(this.activeInput);
+		// console.log(this.activeInput);
 		let inputId = event.target.classList[0].split("-");
-      if (this.activeInput != "") {
-         // console.log(inputId);
-         if (event.target.classList.contains("name-input")) {
-            this.updateScores(inputId[2], inputId[4]);
-         } else {
-            this.updateScores(inputId[1], inputId[3]);
-         }
-         this.activeInput = "";
+		if (this.activeInput != "") {
+			// console.log(inputId);
+			if (event.target.classList.contains("name-input")) {
+				this.updateScores(inputId[2], inputId[4]);
+			} else {
+				this.updateScores(inputId[1], inputId[3], event.target);
+			}
+			this.activeInput = "";
 		}
 	}
 
 	handleKeyDown(event: any) {
 		console.log(this.activeInput);
-      if (!this.validKeys.includes(event.key) && !event.target.classList.contains("name-input")) {
-         console.log("Preventing key", event.key);
+		if (!this.validKeys.includes(event.key) && !event.target.classList.contains("name-input")) {
+			// console.log("Preventing key", event.key);
 			event.preventDefault();
 		}
 	}
 
-	updateScores(pId: any, col: any) {
+	updateScores(pId: any, col: any, element?:any) {
 		// pId = parseInt(pId);
 		// let newScore = parseInt(this.activeInput);
-      let newScore:any = this.activeInput;
-		console.log(`Value is`, newScore);
+		let newScore: any = this.activeInput;
+		// console.log(`Value is`, newScore);
 		// sets name, returns before setting other things
-      if (col == "NAME") {
-         console.log("Column is name");
+		if (col == "NAME") {
+			// console.log("Column is name");
 			for (let key in this.Store.players) {
 				if (this.Store.players[key].name == newScore && key != pId && newScore != "") {
 					// document.querySelector(".input-p-" + pId + "-c-" + col).value = null;
@@ -171,21 +171,22 @@ export class ScorecardPageComponent implements OnInit {
 					return;
 				}
 			}
-         this.Store.players[pId].name = newScore;
-         console.log("set name to: ",this.Store.players[pId].name);
+			this.Store.players[pId].name = newScore;
+			// console.log("set name to: ", this.Store.players[pId].name);
 			return;
-      }
+		}
 		// sets handicap
 		if (col == "HCP") {
 			//  newScore = parseInt(newScore);
 			this.Store.players[pId].hcp = parseInt(newScore);
-      }
-      console.log(`pid is`, pId);
+		}
+		// console.log(`pid is`, pId);
 		// sets scores
 		if (newScore == null || newScore == "-" || newScore == "") {
 			return;
-      } else if (this.Store.players[pId].name == "") {
-         console.warn("Need a name");
+		} else if (this.Store.players[pId].name == "") {
+			// console.warn("Need a name");
+         element.value = "";
 			document.querySelector(".player" + pId)?.children[0].setAttribute("style", "animation: 0.5s invalid");
 			setTimeout(() => {
 				//  document.querySelector(".player" + pId).children[0].style.animation = "";
@@ -198,16 +199,18 @@ export class ScorecardPageComponent implements OnInit {
 			this.Store.players[pId].scores[col] = parseInt(newScore);
 		}
 		// updates all totals except net. fTotal = first 9 holes, sTotal = second 9, gTotal = grand total aka. all 18
-		let fTotal = 0, sTotal = 0, gTotal = 0;
+		let fTotal = 0,
+			sTotal = 0,
+			gTotal = 0;
 		for (let a = 0; a < this.Store.players[pId].scores.length; a++) {
-		    if (this.Store.players[pId].scores[a] && a < 9) {
-		        fTotal += this.Store.players[pId].scores[a];
-		        gTotal += this.Store.players[pId].scores[a];
-		    }
-		    if (this.Store.players[pId].scores[a] && a >= 9) {
-		        sTotal += this.Store.players[pId].scores[a];
-		        gTotal += this.Store.players[pId].scores[a];
-		    }
+			if (this.Store.players[pId].scores[a] && a < 9) {
+				fTotal += this.Store.players[pId].scores[a];
+				gTotal += this.Store.players[pId].scores[a];
+			}
+			if (this.Store.players[pId].scores[a] && a >= 9) {
+				sTotal += this.Store.players[pId].scores[a];
+				gTotal += this.Store.players[pId].scores[a];
+			}
 		}
 		// update scorecard
 		this.Store.players[pId].outScore = fTotal;
