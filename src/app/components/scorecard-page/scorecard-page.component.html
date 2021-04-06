@@ -20,6 +20,8 @@
             <div *ngFor="let pl of [0,1,2,3]" class="r{{pl + 5}}">
                <input type="number" maxlength="2" class="input-{{pl}}-c-{{num}}" (input)="handleInput($event)" (blur)="handleBlur($event)" (keydown)="handleKeyDown($event)" />
             </div>
+            <div class="r9"></div>
+            <div class="r10"></div>
          </div>
 
          <!-- OUT col -->
@@ -27,6 +29,8 @@
             <div class="r0">OUT</div>
             <div *ngFor="let item of muted; let i = index;" style="background: {{muted[i]}}"></div>
             <div *ngFor="let item of [0,1,2,3]; let i = index;" class="r{{item + teeCount}}"></div>
+            <div class="r9"></div>
+            <div class="r10 disabled"></div>
          </div>
 
          <!-- Second set of 9 (in) -->
@@ -36,29 +40,48 @@
             <div *ngFor="let pl of [0,1,2,3]" class="r{{pl + 5}}">
                <input type="number" maxlength="2" class="input-{{pl}}-c-{{num}}" (input)="handleInput($event)" (blur)="handleBlur($event)" (keydown)="handleKeyDown($event)" />
             </div>
+            <div class="r9"></div>
+            <div class="r10"></div>
          </div>
 
          <!-- IN col -->
-         <div class="data-col special-col no-seperator-col data-col-IN" style="left:475vw">
+         <div class="data-col special-col data-col-IN" style="left:475vw">
             <div class="r0">IN</div>
             <div *ngFor="let item of muted; let i = index;" style="background: {{muted[i]}}"></div>
             <div *ngFor="let item of [0,1,2,3]; let i = index;" class="r{{item + teeCount}}"></div>
+            <div class="r9"></div>
+            <div class="r10 disabled"></div>
          </div>
 
          <!-- TOTAL col -->
-         <div class="data-col special-col no-seperator-col data-col-TOTAL" style="left:500vw">
+         <div class="data-col data-col-TOTAL" style="left:500vw">
             <div class="r0">TOTAL</div>
             <div *ngFor="let item of muted; let i = index;" style="background: {{activeCourseData.holes[0].teeBoxes[i].teeHexColor}}"></div>
             <div *ngFor="let item of [0,1,2,3]; let i = index;" class="r{{item + teeCount}}"></div>
+            <div class="r9"></div>
+            <div class="r10 disabled"></div>
          </div>
 
          <!-- HCP col -->
          <div class="data-col data-col-HCP" style="left: 525vw">
             <div>HCP</div>
-            <div *ngFor="let item of [].constructor(teeCount); let i = index;" style="color: {{colors[i]}};" class="r{{i}}"></div>
+            <div *ngFor="let item of [].constructor(teeCount); let i = index;" class="r{{i}} disabled"></div>
             <div *ngFor="let pl of [0,1,2,3]" class="r{{pl + 5}}">
                <input type="number" maxlength="2" class="input-{{pl}}-c-HCP" (input)="handleInput($event)" (blur)="handleBlur($event)" (keydown)="handleKeyDown($event)" />
             </div>
+            <div class="r9 disabled"></div>
+            <div class="r10 disabled"></div>
+         </div>
+
+         <!-- NET col -->
+         <div class="data-col data-col-NET" style="left: 550vw">
+            <div>NET</div>
+            <div *ngFor="let item of [].constructor(teeCount); let i = index;" class="r{{i}} disabled"></div>
+            <div *ngFor="let pl of [0,1,2,3]" class="r{{pl + 5}}">
+               <input type="number" maxlength="2" class="input-{{pl}}-c-HCP" (input)="handleInput($event)" (blur)="handleBlur($event)" (keydown)="handleKeyDown($event)" />
+            </div>
+            <div class="r9 disabled"></div>
+            <div class="r10 disabled"></div>
          </div>
 
 
