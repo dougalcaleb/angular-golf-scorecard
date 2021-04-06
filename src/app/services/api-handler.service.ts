@@ -79,7 +79,8 @@ export class ApiHandlerService {
 		// console.log(this.Store.courseData);
 	}
 
-	async loadBasicInfo(id: any, display = true): Promise<any> {
+   async loadBasicInfo(id: any, display = true): Promise<any> {
+      // console.log("loadBasicInfo called");
 		id = parseInt(id);
       let basic;
       if (sessionStorage.getItem(`course-${this.Store.courseData.courses[id].id}`)) {
@@ -108,7 +109,9 @@ export class ApiHandlerService {
 					if (display) {
 						// console.log("Returning", this.Store.courseData[id]);
 					} else {
-						this.Store.activeCourse = "course-" + this.Store.courseData.courses[id].id;
+                  this.Store.activeCourse = this.Store.courseData.courses[id].id;
+                  // console.log(`store activecourse is`, this.Store.activeCourse);
+                  // this.Store.activeCourse = JSON.parse(sessionStorage.getItem("course-" + this.Store.courseData.courses[id].id) || "");
 					}
 					resolve(basic);
 					this.retrievalAttempts = 3;
@@ -127,9 +130,12 @@ export class ApiHandlerService {
 
 	selectCourse(id: any) {
 		id = parseInt(id);
-		if (!sessionStorage.getItem("course-" + this.Store.courseData.courses[id].id)) {
-			this.loadBasicInfo(id, false);
-		} else {
+      if (!sessionStorage.getItem("course-" + this.Store.courseData.courses[id].id)) {
+         // console.log("Loading not from cache");
+         let loader = this.loadBasicInfo(id, false);
+         // loader.then()
+      } else {
+         // console.log("Retrieving from cache");
 			this.Store.activeCourse = JSON.parse(sessionStorage.getItem("course-" + this.Store.courseData.courses[id].id) || "");
 			// fillCard(id);
 		}

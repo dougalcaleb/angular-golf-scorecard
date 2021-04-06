@@ -62,6 +62,7 @@ export class StoreService {
    }
    
    public setActive(id: any) {
+      // console.log("setActive");
       this.cb.forEach(c => {
          c();
       });

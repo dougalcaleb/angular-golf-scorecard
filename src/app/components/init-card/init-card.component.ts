@@ -27,7 +27,7 @@ export class InitCardComponent implements OnInit {
       if (from != "select") {
          document.querySelector(`.load-${this.idx}`)?.classList.add("clocking");
       } else {
-         this.Store.setActive(id);
+         
       }
 		this.courseData.data = this.apiHandler.loadBasicInfo(id, from == "select" ? false : true).then(
          (data) => {
@@ -39,6 +39,7 @@ export class InitCardComponent implements OnInit {
 				this.courseData.data = data.data;
 				this.fetched = true;
             if (from == "select") {
+               this.Store.setActive(id);
                callback();
             } else {
                this.displayInfo = true;
@@ -53,12 +54,14 @@ export class InitCardComponent implements OnInit {
 	}
 
    select(id: any) {
+      // console.log(`initcard select`, id);
       document.querySelector(`.select-${this.idx}`)?.classList.add("clocking");
       id = parseInt(id);
       this.Store.activeCourse = this.Store.courseData.courses[id].id;
       this.requestLoad(id, "select", () => {
+         // console.log(`select callback triggered`);
          document.querySelector(`.select-${this.idx}`)?.classList.remove("clocking");
-         window.scroll({
+         document.querySelector(".root-wrap")?.scroll({
 				top: 0,
 				left: 0,
 				behavior: "smooth",
