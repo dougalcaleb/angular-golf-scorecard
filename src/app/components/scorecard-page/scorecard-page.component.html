@@ -1,13 +1,13 @@
 <div class="scorecard">
-   <div class="name">Name Here</div>
+   <div class="name" *ngIf="activeCourseData">{{ activeCourseData.name }}</div>
    <div class="scorecard-wrap">
       <div class="headers">
           <div class="cell-empty">HOLE</div>
           <div class="tee-head"><span>TEES</span></div>
-          <div class="player player0"><input type="text" placeholder="P1 INT" maxlength="3" class="input-p-0-c-NAME"></div>
-          <div class="player player1"><input type="text" placeholder="P2 INT" maxlength="3" class="input-p-1-c-NAME"></div>
-          <div class="player player2"><input type="text" placeholder="P3 INT" maxlength="3" class="input-p-2-c-NAME"></div>
-          <div class="player player3"><input type="text" placeholder="P4 INT" maxlength="3" class="input-p-3-c-NAME"></div>
+          <div class="player player0"><input type="text" placeholder="P1 INT" maxlength="3" class="input-p-0-c-NAME name-input" (input)="handleInput($event)" (blur)="handleBlur($event)" (keydown)="handleKeyDown($event)"></div>
+          <div class="player player1"><input type="text" placeholder="P2 INT" maxlength="3" class="input-p-1-c-NAME name-input" (input)="handleInput($event)" (blur)="handleBlur($event)" (keydown)="handleKeyDown($event)"></div>
+          <div class="player player2"><input type="text" placeholder="P3 INT" maxlength="3" class="input-p-2-c-NAME name-input" (input)="handleInput($event)" (blur)="handleBlur($event)" (keydown)="handleKeyDown($event)"></div>
+          <div class="player player3"><input type="text" placeholder="P4 INT" maxlength="3" class="input-p-3-c-NAME name-input" (input)="handleInput($event)" (blur)="handleBlur($event)" (keydown)="handleKeyDown($event)"></div>
           <div class="par"><span>PAR</span></div>
           <div class="hcp"><span>HCP</span></div>
       </div>
@@ -15,21 +15,21 @@
       <div class="databody">
          <!-- First set of 9 (out) -->
          <div *ngFor="let num of [0,1,2,3,4,5,6,7,8]" class="data-col data-col-{{num}}" style="left: {{num * 25}}vw">
-            <div>{{num}}</div>
+            <div>{{num + 1}}</div>
             <div *ngFor="let item of [].constructor(teeCount); let i = index;" style="color: {{colors[i]}}; background: {{activeCourseData.holes[0].teeBoxes[i].teeHexColor}};" class="r{{num + 1}}">{{ activeCourseData.holes[num].teeBoxes[i].yards }}</div>
             <div *ngFor="let pl of [0,1,2,3]" class="r{{pl + 5}}">
                <input type="number" maxlength="2" class="input-{{pl}}-c-{{num}}" (input)="handleInput($event)" (blur)="handleBlur($event)" (keydown)="handleKeyDown($event)" />
             </div>
-            <div class="r9"></div>
-            <div class="r10"></div>
+            <div class="r9" *ngIf="activeCourseData">{{ activeCourseData.holes[num].teeBoxes[0].par }}</div>
+            <div class="r10" *ngIf="activeCourseData">{{ activeCourseData.holes[num].teeBoxes[0].hcp }}</div>
          </div>
 
          <!-- OUT col -->
          <div class="data-col special-col no-seperator-col data-col-OUT" style="left:225vw">
             <div class="r0">OUT</div>
-            <div *ngFor="let item of muted; let i = index;" style="background: {{muted[i]}}"></div>
-            <div *ngFor="let item of [0,1,2,3]; let i = index;" class="r{{item + teeCount}}"></div>
-            <div class="r9"></div>
+            <div *ngFor="let item of muted; let i = index;" style="color: {{colors[i]}}; background: {{muted[i]}}">{{ totals.tees.out[i] }}</div>
+            <div *ngFor="let item of [0,1,2,3]; let i = index;" class="r{{item + teeCount}}">{{ Store.players[i].outScore }}</div>
+            <div class="r9">{{totals.par.out}}</div>
             <div class="r10 disabled"></div>
          </div>
 
@@ -40,25 +40,25 @@
             <div *ngFor="let pl of [0,1,2,3]" class="r{{pl + 5}}">
                <input type="number" maxlength="2" class="input-{{pl}}-c-{{num}}" (input)="handleInput($event)" (blur)="handleBlur($event)" (keydown)="handleKeyDown($event)" />
             </div>
-            <div class="r9"></div>
-            <div class="r10"></div>
+            <div class="r9" *ngIf="activeCourseData">{{ activeCourseData.holes[num - 1].teeBoxes[0].par }}</div>
+            <div class="r10" *ngIf="activeCourseData">{{ activeCourseData.holes[num - 1].teeBoxes[0].hcp }}</div>
          </div>
 
          <!-- IN col -->
          <div class="data-col special-col data-col-IN" style="left:475vw">
             <div class="r0">IN</div>
-            <div *ngFor="let item of muted; let i = index;" style="background: {{muted[i]}}"></div>
-            <div *ngFor="let item of [0,1,2,3]; let i = index;" class="r{{item + teeCount}}"></div>
-            <div class="r9"></div>
+            <div *ngFor="let item of muted; let i = index;" style="color: {{colors[i]}}; background: {{muted[i]}}">{{ totals.tees.in[i] }}</div>
+            <div *ngFor="let item of [0,1,2,3]; let i = index;" class="r{{item + teeCount}}">{{ Store.players[i].inScore }}</div>
+            <div class="r9">{{totals.par.in}}</div>
             <div class="r10 disabled"></div>
          </div>
 
          <!-- TOTAL col -->
          <div class="data-col data-col-TOTAL" style="left:500vw">
             <div class="r0">TOTAL</div>
-            <div *ngFor="let item of muted; let i = index;" style="background: {{activeCourseData.holes[0].teeBoxes[i].teeHexColor}}"></div>
-            <div *ngFor="let item of [0,1,2,3]; let i = index;" class="r{{item + teeCount}}"></div>
-            <div class="r9"></div>
+            <div *ngFor="let item of muted; let i = index;" style="color: {{colors[i]}}; background: {{activeCourseData.holes[0].teeBoxes[i].teeHexColor}}">{{ totals.tees.total[i] }}</div>
+            <div *ngFor="let item of [0,1,2,3]; let i = index;" class="r{{item + teeCount}}">{{ Store.players[i].totalScore }}</div>
+            <div class="r9">{{totals.par.total}}</div>
             <div class="r10 disabled"></div>
          </div>
 
@@ -77,9 +77,7 @@
          <div class="data-col data-col-NET" style="left: 550vw">
             <div>NET</div>
             <div *ngFor="let item of [].constructor(teeCount); let i = index;" class="r{{i}} disabled"></div>
-            <div *ngFor="let pl of [0,1,2,3]" class="r{{pl + 5}}">
-               <input type="number" maxlength="2" class="input-{{pl}}-c-HCP" (input)="handleInput($event)" (blur)="handleBlur($event)" (keydown)="handleKeyDown($event)" />
-            </div>
+            <div *ngFor="let pl of [0,1,2,3]" class="r{{pl + 5}}">{{ Store.players[pl].net }}</div>
             <div class="r9 disabled"></div>
             <div class="r10 disabled"></div>
          </div>
